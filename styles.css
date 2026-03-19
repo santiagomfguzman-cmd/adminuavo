@@ -1,0 +1,265 @@
+/* VARIABLES DE COLOR GLOBAL (tema UAVO) */
+:root {
+  --uavo-dark: #385028;
+  --uavo-light: #7ab547;
+  --uavo-pale: #eef5e6;
+  --bg: #f0f2f5;
+  --danger: #ff4757;
+}
+
+/* ESTILOS GENERALES DE PÁGINA */
+body { 
+    margin: 0; 
+    font-family: 'Segoe UI', sans-serif; 
+    background: var(--bg); 
+    overflow-x: hidden; 
+}
+
+/* CABECERA SUPERIOR (header con carrusel, logo e itinerario) */
+header {
+  position: relative;
+  background: white;
+  padding: 20px 15px; 
+  text-align: center; 
+  border-bottom: 6px solid var(--uavo-light);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-text h1 {
+  position: relative;
+  z-index: 10;
+  font-size: 3.8rem; 
+  color: var(--uavo-light); 
+  text-transform: uppercase;
+  letter-spacing: 6px; 
+  font-weight: 900;
+  margin: 30px 0 0 0;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.05); 
+}
+
+.carrusel-fondo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.12; 
+}
+
+.carrusel-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  animation: scroll-infinito 50S linear infinite; 
+}
+
+.carrusel-track img {
+  height: 350px; 
+  width: auto;
+  margin: auto 60px; 
+  object-fit: contain;
+}
+
+/* ANIMACIÓN DEL CARRUSEL DE TARJETAS */
+@keyframes scroll-infinito {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* CONTENEDOR DE LOGO */
+.logo-container {
+  position: relative;
+  width: 400px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.logo-central {
+  width: 240px;
+  height: 240px;
+  background: white;
+  border-radius: 50%;
+  border: 6px solid var(--uavo-light);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  z-index: 20;
+  object-fit: contain;
+  padding: 15px;
+}
+
+/* MEDIA QUERIES: adaptaciones para móviles (máx. 650px) */
+@media (max-width: 650px) {
+  .header-text h1 { font-size: 2rem; letter-spacing: 2px; }
+  .logo-container { width: 100%; height: auto; flex-wrap: wrap; gap: 15px;
+     padding: 20px 0; justify-content: center; }
+  .logo-central { width: 160px; height: 160px; order: -1;
+     position: relative; margin-bottom: 20px; }
+}
+
+/* LAYOUT PRINCIPAL: contenedor, panel de navegación (selector de mes/año) */
+.container { max-width: 1100px; margin: auto; padding: 20px; }
+
+.nav-card {
+  background: white; padding: 20px; border-radius: 20px; margin-top: -30px;
+  display: flex; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+   position: relative; z-index: 100;
+  align-items: center;
+}
+
+.info-label { color: #666; font-size: 14px; font-weight: 500; }
+
+.select-custom { padding: 10px; border-radius: 10px;
+   border: 1px solid #ddd;
+   outline: none; cursor: pointer;}
+
+.calendar-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin: 30px 0;
+  background: white; padding: 20px; border-radius: 20px;
+}
+
+/* CELDAS DEL CALENDARIO */
+.cal-cell {
+  aspect-ratio: 1/1; border-radius: 10px; border: 1px solid #f5f5f5; 
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: 0.2s;
+}
+
+.cal-cell:hover { background: var(--uavo-pale); }
+.cal-cell.has-ev { border-left: 4px solid var(--uavo-light); background: #f9fff4; font-weight: bold; }
+
+/* LISTADO DE EVENTOS EXTRAS (itinerary cards) */
+.itinerary-item { display: flex; background: white; 
+  border-radius: 15px; margin-bottom: 15px;
+   overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.day-tag { background: var(--uavo-dark); color: white; min-width: 80px; display: flex; 
+  flex-direction: column; align-items: center; justify-content: center; }
+.event-card { flex: 1; padding: 15px; text-align: left; }
+
+.btn-delete-inline {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+    transition: 0.2s;
+}
+
+.btn-delete-inline:hover {
+    transform: scale(1.05);
+    background: #e04050;
+}
+
+/* MODAL DE CREACIÓN/EDICIÓN DE EVENTOS */
+.modal-overlay {
+    position: fixed; 
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.improved-modal {
+    background: white;
+    padding: 40px;
+    border-radius: 40px; 
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    animation: zoomIn 0.3s ease; 
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-label {
+    display: block; font-weight: bold; margin: 15px 0 5px 0; font-size: 14px; color: #333; text-align: left;
+}
+
+.modal-input {
+    width: 100%; padding: 12px 15px; border-radius: 15px; border: 1px solid #ddd;
+    background: #f9f9f9; font-size: 15px; box-sizing: border-box; outline: none; font-family: inherit;
+}
+
+.modal-input:focus { border-color: var(--uavo-light); background: #fff; }
+
+.modal-footer { display: flex; justify-content: flex-end; gap: 15px; margin-top: 25px; }
+
+.btn-secondary { background: #efefef; border: none; padding: 12px 25px; border-radius: 12px;
+   font-weight: bold; cursor: pointer; }
+.btn-save { background: var(--uavo-dark); color: white; border: none; padding: 12px 25px;
+   border-radius: 12px; font-weight: bold; cursor: pointer; }
+
+.badge { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 11px;
+   font-weight: bold; text-transform: uppercase; }
+.bg-urgente { background: #ff4757; color: white; }
+.bg-eventos { background: var(--uavo-light); color: white; }
+.bg-tareas { background: #ffa502; color: white; }
+.bg-becas { background: #2ed573; color: white; }
+
+.site-footer {
+  background: #28371b;
+  color: #f0f2f5;
+  text-align: center;
+  padding: 18px 14px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.footer-logo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.35);
+  margin-right: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  background: white;
+}
+
+.footer-link {
+  color: #b1d88b;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+
+.footer-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+  vertical-align: middle;
+  filter: none;
+  opacity: 0.95;
+  transition: opacity 0.2s ease;
+}
+
+.footer-icon:hover {
+  opacity: 1;
+}
+
+@media (max-width: 650px) {
+  .footer-content { flex-direction: column; gap: 10px; }
+  .footer-logo { margin: 0; }
+}
